@@ -117,31 +117,38 @@ public class BinarySearchTree<T extends Comparable<T>> {
 	//Print the current node first and then recurse on the children
 	public void preOrder() {
 		System.out.println("PreOrder Test Commit"); //test
-		preOrderRecurse(root); 	
+		preOrderRecurse(root);
+		
 	}
 	
 	private void preOrderRecurse(BSTNode<T> node) {
 		if (node == null) {
-			System.out.print(" ");
 			return;
 		}
 		
-		System.out.print(node.data);
-		if (node != null) {
-			inOrderRecurse(node.leftChild);
-			
-		}
+		System.out.print(node.data + " ");
+		preOrderRecurse(node.leftChild);
+		preOrderRecurse(node.rightChild);	
 		
-		if (node != null) {
-			inOrderRecurse(node.rightChild);	
-		}
 		
 	}
 	
 	//Traverse the tree in an preorder fashion but using a stack
 	//Print the current node first and then recurse on the children
 	public void preOrderStack() {
-		Stack<BSTNode<T>> pre = new Stack<BSTNode<T>>();
+		Stack<BSTNode<T>> stack = new Stack<BSTNode<T>>();
+	    BSTNode<T> cur = root;
+
+	    while (cur != null || !stack.isEmpty()) {
+	        while (cur != null) {
+	        	System.out.print(cur.data + " ");
+	        	stack.push(cur);
+	            cur = cur.leftChild;
+	        }
+
+	        cur = stack.pop();
+	        cur = cur.rightChild;
+	    }
 		
 	}
 		
@@ -153,6 +160,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
 	public void inOrder() {
 		System.out.println("inOrder test");
 		inOrderRecurse(root); 
+		
 	}
 	
 	public void inOrderRecurse(BSTNode<T> node) {
@@ -174,10 +182,22 @@ public class BinarySearchTree<T extends Comparable<T>> {
 	}
 	//Traverse the tree in an inorder fashion but using a stack
 	public void inOrderStack() {
-		Stack<BSTNode<T>> in = new Stack<BSTNode<T>>();
-		
-		
+	    Stack<BSTNode<T>> stack = new Stack<BSTNode<T>>();
+	    BSTNode<T> cur = root;
+
+	    while (cur != null || !stack.isEmpty()) {
+	        while (cur != null) {
+	            stack.push(cur);
+	            cur = cur.leftChild;
+	        }
+
+	        cur = stack.pop();
+	        System.out.print(cur.data + " ");
+
+	        cur = cur.rightChild;
+	    }
 	}
+
 	
 	//Traverse the tree in an postorder fashion
 	//Recurse on the children and then print the value in the current node
